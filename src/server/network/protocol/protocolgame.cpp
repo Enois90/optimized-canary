@@ -3034,7 +3034,7 @@ void ProtocolGame::sendCyclopediaCharacterGeneralStats()
 	msg.add<uint32_t>(std::clamp(playerMana, 0u, maxUint32));
 	// Safe conversion for max mana
 	auto playerMaxMana = player->getMaxMana();
-	msg.add<uint32_t>(std::clamp((uint32_t)playerMaxMana, 0u, maxUint32));
+	msg.add<uint32_t>(std::clamp(playerMaxMana, 0u, maxUint32));
 
 	msg.addByte(player->getSoul());
 	msg.add<uint16_t>(player->getStaminaMinutes());
