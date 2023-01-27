@@ -486,11 +486,12 @@ void Player::updateInventoryImbuement()
 
 			// Imbuement from imbuementInfo, this variable reduces code complexity
 			auto imbuement = imbuementInfo.imbuement;
+			// Get the category of the imbuement
+			const CategoryImbuement* categoryImbuement = g_imbuements().getCategoryByID(imbuement->getCategory());
 			// Parent of the imbued item
 			auto parent = item->getParent();
 			// If the imbuement is aggressive and the player is not in fight mode or is in a protection zone, or the item is in a container, ignore it.
-			if (const CategoryImbuement* categoryImbuement = g_imbuements().getCategoryByID(imbuementInfo.imbuement->getCategory());
-				categoryImbuement && categoryImbuement->agressive && (isInProtectionZone || !isInFightMode))
+			if (categoryImbuement && categoryImbuement->agressive && (isInProtectionZone || !isInFightMode))
 			{
 				continue;
 			}
