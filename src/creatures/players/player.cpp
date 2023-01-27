@@ -486,8 +486,6 @@ void Player::updateInventoryImbuement()
 
 			// Imbuement from imbuementInfo, this variable reduces code complexity
 			auto imbuement = imbuementInfo.imbuement;
-			// Get the category of the imbuement
-			const CategoryImbuement* categoryImbuement = g_imbuements().getCategoryByID(imbuement->getCategory());
 			// Parent of the imbued item
 			auto parent = item->getParent();
 			// If the imbuement is aggressive and the player is not in fight mode or is in a protection zone, or the item is in a container, ignore it.
@@ -2402,7 +2400,10 @@ BlockType_t Player::blockHit(Creature* attacker, CombatType_t combatType, int64_
 			if (it.abilities) {
 				const int16_t& absorbPercent = it.abilities->absorbPercent[combatTypeToIndex(combatType)];
 				if (absorbPercent != 0) {
-					auto safeConverted = convertToSafeInteger<int64_t>(std::round(damage * (absorbPercent / 100.)));
+					// Safe conversion
+					auto doubleDamage = static_cast<double>(damage);
+					auto absorbDouble = static_cast<double>(absorbPercent);
+					auto safeConverted = convertToSafeInteger<int64_t>(std::round(doubleDamage * (absorbDouble / 100.)));
 					damage -= safeConverted;
 
 					uint16_t charges = item->getCharges();
